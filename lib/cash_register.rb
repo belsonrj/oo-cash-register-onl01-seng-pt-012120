@@ -1,7 +1,32 @@
+Skip to content
+Search or jump to…
 
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@belsonrj 
+Learn Git and GitHub without any code!
+Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.
+
+
+alexisadorn
+/
+Flatiron-OO-Ruby
+1
+014
+ Code Issues 0 Pull requests 0 Actions Projects 0 Wiki Security Insights
+Flatiron-OO-Ruby/oo-cash-register-v-000/lib/cash_register.rb / 
+@alexisadorn alexisadorn oo-cash-register-v-000
+1ebac13 on May 17, 2017
+39 lines (34 sloc)  748 Bytes
+  
+You're using code navigation to jump to definitions or references.
+Learn more or give us feedback
+require 'pry'
 class CashRegister
-
-  attr_accessor :total, :discount, :last_transaction_amount, :items
+  attr_accessor :total, :discount, :price, :items
 
   def initialize(discount = 0)
     @total = 0
@@ -9,35 +34,32 @@ class CashRegister
     @items = []
   end
 
-
-  def add_item(title,price,quantity = 1)
-    if quantity>1
-      i=0
-      while i<quantity
-        @items << title
-        i+=1
+  def add_item(item, price, quantity = 1)
+    @price = price
+    @total += price * quantity
+    if quantity > 1
+      counter = 0
+      while counter < quantity
+        @items << item
+        counter += 1
       end
     else
-      @items << title
+      @items << item
     end
-    @total += price*quantity
-    @last_transaction_amount = @total
-    @total
   end
 
-  def apply_discount()
+  def apply_discount
     if @discount > 0
-      @discount = @discount/100.to_f
-      @total = @total - (@total * (@discount))
-      "After the discount, the total comes to $#{@total.to_i}."
+      @to_take_off = (price * discount)/100
+      @total -= @to_take_off
+      return "After the discount, the total comes to $#{total}."
     else
-      "There is no discount to apply."
+      return "There is no discount to apply."
     end
   end
 
-
-  def void_last_transaction()
-    @total -= @last_transaction_amount
+  def void_last_transaction
+    @total -= @price
   end
 
 end
